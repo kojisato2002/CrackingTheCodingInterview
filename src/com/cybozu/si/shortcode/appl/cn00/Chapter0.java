@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 public class Chapter0 {
 	private int time;
 	private int minute;
-	
+
 	public BigDecimal longHandle;
 	public BigDecimal shortHandle;
 	public BigDecimal shortHandleAdd;
-	
+
 	public void setTimeMinute(int i, int j) {
 		this.setTime(i);
 		this.setMinute(j);
@@ -28,14 +28,38 @@ public class Chapter0 {
 		// 24時間表示を正規化
 		if(time > 12) {time -= 12;}
 		// 短針の計算は、まず、360° / 12時間 (30°) X 計算時間
-		BigDecimal hourAngle = BigDecimal.valueOf(360 / 12);		
+		BigDecimal hourAngle = BigDecimal.valueOf(360 / 12);
 		shortHandle = hourAngle.multiply(BigDecimal.valueOf(time));
 		// 次に分数の進みを計算する。60分で、30°進むので、1分あたりは、0.5°、これに分数をかける
-		shortHandleAdd = BigDecimal.valueOf(minute).multiply(hourAngle.divide(BigDecimal.valueOf(60))); 
+		shortHandleAdd = BigDecimal.valueOf(minute).multiply(hourAngle.divide(BigDecimal.valueOf(60)));
 		// 計算された分数の進み角度を、初期短針確度に加算する
 		shortHandle = shortHandle.add(shortHandleAdd);
 		return 0;
 	}
+
+	/*
+ある時刻が与えられとき、アナログ時計の長針と短針の角度を計算してください。
+言語はなんでもよく、(経験なければ、計算方法のみでも)、関数を一つ用意してもらうイメージ。
+
+※秒は考慮せず
+※コードクイズの時間があまりない場合に使っています。
+※簡単な論理思考力と、普段からコードを書いているかを確認しています。
+
+
+・正しく仕様を理解できているか
+・シンプルな計算になっているか
+・ミスがあった場合、指摘に気づくか
+	 *
+	 */
+
+	public BigDecimal analogClockAngle(int h, int m) {
+
+		return BigDecimal.valueOf((30 * h) - (5.5 * m)) ;
+
+	}
+
+
+
 	// P55 Approach 2:循環配列最小値探索リニアサーチ(大小が逆転しているところを探索)
 	public int circleArraySearchLinear(int[] al) {
 		int intBefore = 0;
@@ -54,17 +78,17 @@ public class Chapter0 {
 	public int circleArraySearchBinary(int[] al) {
 		int intSearch = 0;									// 探索開始配列index
 		int intCenter = al.length / 2;						// 初期二分引き(少数は切捨てに注意)
-		
+
 		if(al[intCenter - 1] > al[intCenter]) {				// 最初にそこが転換点の対処
 			return ++intCenter;
 		}
-		
+
 		for (;intCenter > 0;) {
 			// 分割地点の設定、要素数を2で割った切り上げ値。int標準だと切り下げ
 			int wp = ((intCenter - intSearch) / 2) + ((intCenter - intSearch) % 2);
 //			int wp = (intCenter - intSearch) / 2;
 //			int wp = Math.round((intCenter - intSearch) / 2.0f);
-			
+
 			if(al[intSearch] < al[intCenter]) 				// 探索開始要素と二分引き要素の大小が逆転していないか
 			{												// 逆転している場合に、そちらの配列範囲に存在
 				intSearch = intCenter;						// 逆転していない場合、二分引き箇所を開始地点に
@@ -73,10 +97,10 @@ public class Chapter0 {
 				intCenter = intCenter - wp;
 			}
 			if (intSearch == intCenter -1) {				// 二分引きする要素が無くなったときの判定
-				if(al[intSearch] < al[intCenter]) 
+				if(al[intSearch] < al[intCenter])
 				{
 					intSearch += 2;
-					
+
 				} else {
 					intSearch += 1;
 				}
@@ -88,7 +112,7 @@ public class Chapter0 {
 	//　循環配列最小値探索バイナリサーチ(探索ポインターの計算にフォーカス)
 	// 左隣との大小関係逆転を判定条件とする
 	public int circleArraySearchBinary2(int[] al) {
-		
+
 		if (al.length < 2) {return 0;}						// 要素数1以下は0返却
 		int loop_cnt = 0;									// 安全用カウンター
 
@@ -115,15 +139,15 @@ public class Chapter0 {
 							return al[sp + 1];
 						}
 					}
-					
+
 				}
 				ep = sp + (low_cnt / 2) - (low_cnt % 2);	// 終了点を、開始点 + 残りの前半部分要素数 / 2(切捨て)
 				upp_cnt = low_cnt - (rst + 1);
 				low_cnt = rst + 1;							// 前半部分の要素数は終了点 - 開始点
 			}
-			
+
 			if (ep < 0 || sp >= noe) {return 0;}
-												
+
 			if(al[sp] > al[ep]) {
 				return al[ep];
 			}

@@ -1,8 +1,7 @@
 package com.cybozu.si.shortcode.test.cn00;
 
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -15,7 +14,7 @@ import org.junit.Test;
 import com.cybozu.si.shortcode.appl.cn00.Chapter0;
 
 public class testChapter0 {
-	
+
 	private Chapter0 c0 = new Chapter0();
 
 	@BeforeClass
@@ -36,17 +35,18 @@ public class testChapter0 {
 
 	@Test
 	public void testClockAngle() {
-		
+
 		c0.setTimeMinute(13, 59);
 		assertEquals(0, c0.clockAngle());
 		assertEquals(BigDecimal.valueOf(354), c0.longHandle);
 		assertEquals(BigDecimal.valueOf(59.5), c0.shortHandle);
-		
+
 		c0.setTimeMinute(15, 00);
 		assertEquals(0, c0.clockAngle());
 		assertEquals(BigDecimal.valueOf(0), c0.longHandle);
 		assertEquals(BigDecimal.valueOf(90.0), c0.shortHandle);
-		
+		assertEquals(BigDecimal.valueOf(180.0), c0.analogClockAngle(6, 0));
+
 		c0.setTimeMinute(18, 15);
 		assertEquals(0, c0.clockAngle());
 		assertEquals(BigDecimal.valueOf(90), c0.longHandle);
@@ -99,10 +99,10 @@ public class testChapter0 {
 		assertEquals(3, ans);
 */
 
+		/*
 		int[] al7 = {9, 10, 3, 4, 5, 6, 7, 8};
 		ans = c0.circleArraySearchBinary2(al7);
 		assertEquals(3, ans);
-		/*
 
 		int[] al8 = {31,32,33,34,35,36,37,38,39,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
 		ans = c0.circleArraySearchBinary2(al8);
@@ -110,7 +110,7 @@ public class testChapter0 {
 
 		start = System.currentTimeMillis();
 		ans = c0.circleArraySearchBinary2(al2);
-		assertEquals(1, ans);		
+		assertEquals(1, ans);
 		end = System.currentTimeMillis();
 		System.out.print("ans:" + ans);
 		System.out.println(" 二分探索(2)処理時間 :" + (end - start) + " ミリ秒");

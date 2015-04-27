@@ -10,8 +10,8 @@ import com.cybozu.si.shortcode.appl.cn01.Chapter1;
 
 
 public class testChapter1 {
-	String strOver26 = "abcdefghijklmnopqrstuvwxyza";
-	String strDuplicate = "abca";
+	String strOver52 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZs";
+	String strDuplicate = "abcABCa";
 	String strNoDuplicate = "abcdefghijklmn";
 
 	private Chapter1 c1 = new Chapter1();
@@ -20,8 +20,8 @@ public class testChapter1 {
 		assertEquals(c1.sampleFalse(), false);
 	}
 	@Test
-	public void testOver26() {
-		assertEquals(c1.dupCheck(strOver26), true);
+	public void testOver52() {
+		assertEquals(c1.dupCheck(strOver52), true);
 	}
 	@Test
 	public void testDuplicate() {

@@ -1,24 +1,28 @@
 package com.cybozu.si.shortcode.appl.cn01;
 
 //Chapter 1. 配列と文字列
+// ある文字列が、すべてユニークであるかどうかを判定するアルゴリズムを実装
+// また、それを実装するのに、新たなデータ構造が使えない場合どうすめばよいですか?
+//
+// (1) Implement an alogrithm to determine if a string has all unique characters.
+// (2) What if you cannnot use addtional data structures?
+//
 // Alphabet a to z version (2014/08/11)
 
 public class Chapter1 {
-	// 1.1
-	StringBuffer sb = new StringBuffer();
 
 	public boolean dupCheck(String s) {
 
-		if (s.length() > 26) {
+		// 半角英文字であることを前提とすると、53文字以上は無条件重複
+
+		if (s.length() > 53) {
 			return true;
 		}
 
-		boolean[] checkInt = new boolean[26];
+		boolean[] checkInt = new boolean[255];
 
 		for(int i = 0; i < s.length(); i++) {
 			int c = ((int)s.charAt(i));
-			int a_code = ('a');
-			c = c - a_code;
 
 			if(checkInt[c]) {
 				return true;
